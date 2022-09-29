@@ -115,7 +115,7 @@ class Communicator:
         _client = partial(boto3.client, service_name=broker.name)
         for alias, method in broker.interface.items():
             try:
-                print(f'\n\nLATER_CONFIG ==> {config}\n\n')
+                print(f'\n\nLATER_CONFIG ==> {config}\n{_client}\n\n')
                 client = _client(  # is it STILL here????
                     region_name=config.region_name, endpoint_url=config.endpoint_url
                 )
