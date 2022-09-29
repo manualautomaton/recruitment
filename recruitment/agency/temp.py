@@ -19,6 +19,7 @@ class Communicator(ActualCommunicator):
         expected_args: Optional[Iterable] = None,
         expected_kwargs: Optional[dict] = None
     ):
+        self.config = config
         self.response_provider = lambda: expected_payload or {}
         self.args_provider = lambda: expected_args or {}
         self.kwargs_provider = lambda: expected_kwargs or {}
