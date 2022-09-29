@@ -126,15 +126,7 @@ class Communicator:
     class FailedToInstantiate(Exception):
         def __init__(self, given: Config, cause: Exception):
             cause = f'Caused by {cause.__class__.__name__}:\n\t{cause}\n'
-            redaction = '*' * 10
-            redacted_config = Config(
-                service_name=given.service_name,
-                region_name=given.region_name,
-                aws_access_key_id=redaction,
-                aws_secret_access_key=redaction,
-                endpoint_url=given.endpoint_url
-            )
-            super().__init__(cause + str(redacted_config))
+            super().__init__(cause + str(given))
 
 
 class Publisher:
