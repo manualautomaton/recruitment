@@ -25,6 +25,7 @@ class Communicator(ActualCommunicator):
         self.kwargs_provider = lambda: expected_kwargs or {}
         # below replease super() call; is copied from recruitment.agency.Communicator
         broker = Broker(config.service_name)
+        print('\nREGION_NAME -->>>', config.region_name)
         for alias, method in broker.interface.items():
             try:
                 client = boto3.client(
