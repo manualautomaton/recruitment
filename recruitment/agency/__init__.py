@@ -118,6 +118,9 @@ class Communicator:
             except (ValueError, NoRegionError) as e:
                 print('-->>>', e, e.__class__.__name__)
                 raise Communicator.FailedToInstantiate(given=config) from e
+            except Exception as uncaught:
+                print('==>>>', uncaught, uncaught.__class__.__name__)
+                raise Communicator.FailedToInstantiate(given=config) from uncaught
             setattr(self, alias, getattr(client, method))
 
     class FailedToInstantiate(Exception):
