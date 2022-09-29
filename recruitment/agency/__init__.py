@@ -117,14 +117,15 @@ class Communicator:
                 )
             except (ValueError, NoRegionError) as e:
                 print('-->>>', e, e.__class__.__name__)
-                raise Communicator.FailedToInstantiate(given=config) from e
+                raise Communicator.FailedToInstantiate(given=config, cause=e) from e
             except Exception as uncaught:
                 print('==>>>', uncaught, uncaught.__class__.__name__)
-                raise Communicator.FailedToInstantiate(given=config) from uncaught
+                raise Communicator.FailedToInstantiate(given=config, cause=uncaught) from uncaught
             setattr(self, alias, getattr(client, method))
 
     class FailedToInstantiate(Exception):
-        def __init__(self, given: Config):
+        def __init__(self, given: Config, cause: Exception):
+            cause = f'Caused by {cause.__class__.__name__}:\n\t{cause}\n'
             redaction = '*' * 10
             redacted_config = Config(
                 service_name=given.service_name,
@@ -133,7 +134,7 @@ class Communicator:
                 aws_secret_access_key=redaction,
                 endpoint_url=given.endpoint_url
             )
-            super().__init__(str(redacted_config))
+            super().__init__(cause + str(redacted_config))
 
 
 class Publisher:
