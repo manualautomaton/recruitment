@@ -116,6 +116,7 @@ class Communicator:
                     region_name=config.region_name,
                 )
             except (ValueError, NoRegionError) as e:
+                print('-->>>', e, e.__class__.__name__)
                 raise Communicator.FailedToInstantiate(given=config) from e
             setattr(self, alias, getattr(client, method))
 
