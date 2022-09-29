@@ -119,7 +119,7 @@ class Communicator:
                 client = _client(  # is it STILL here????
                     region_name=config.region_name, endpoint_url=config.endpoint_url
                 )
-                print(client, '\n\n')
+                print(client, client.region_name, '\n\n')
             except (ValueError, NoRegionError) as e:
                 raise Communicator.FailedToInstantiate(failure=e, given=config) from e
             setattr(self, alias, getattr(client, method))
