@@ -111,7 +111,7 @@ class Communicator:
         for alias, method in broker.interface.items():
             try:
                 client = boto3.client(
-                    service_name=config.service_name,
+                    config.service_name,
                     endpoint_url=config.endpoint_url,
                     region_name=config.region_name,
                 )
