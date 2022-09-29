@@ -5,7 +5,6 @@ from dataclasses import dataclass
 from enum import Enum
 from enum import auto
 from functools import reduce
-from functools import partial
 from os import environ as envvars
 from pathlib import Path
 from typing import Callable
@@ -108,12 +107,13 @@ class Communicator:
     """An object that hosts the Broker.interface"""
 
     def __init__(self, config: Config):
-        broker = Broker(config.service_name)  # maybe redundant
-        _client = partial(boto3.client, service_name=broker.name)
+        broker = Broker(config.service_name)
         for alias, method in broker.interface.items():
             try:
-                client = _client(
-                    region_name=config.region_name, endpoint_url=config.endpoint_url
+                client = boto3.client(
+                    service_name=config.service_name,
+                    endpoint_url=config.endpoint_url,
+                    region_name=config.region_name,
                 )
             except (ValueError, NoRegionError) as e:
                 raise Communicator.FailedToInstantiate(given=config) from e
