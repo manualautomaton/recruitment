@@ -23,23 +23,7 @@ class Communicator(ActualCommunicator):
         self.response_provider = lambda: expected_payload or {}
         self.args_provider = lambda: expected_args or {}
         self.kwargs_provider = lambda: expected_kwargs or {}
-        # below replease super() call; is copied from recruitment.agency.Communicator
-        broker = Broker(config.service_name)
-        print('\nREGION_NAME -->>>', config.region_name)
-        for alias, method in broker.interface.items():
-            try:
-                client = boto3.client(
-                    service_name=config.service_name,
-                    endpoint_url=config.endpoint_url,
-                    region_name=config.region_name,
-                )
-            except (ValueError, NoRegionError) as e:
-                print('-->>>', e, e.__class__.__name__)
-                raise Communicator.FailedToInstantiate(given=config, cause=e) from e
-            except Exception as uncaught:
-                print('==>>>', uncaught, uncaught.__class__.__name__)
-                raise Communicator.FailedToInstantiate(given=config, cause=uncaught) from uncaught
-            setattr(self, alias, getattr(client, method))
+        super().__init__(config)
 
     def __enter__(self):
         self.patcher = patch('botocore.client.BaseClient._make_api_call')
