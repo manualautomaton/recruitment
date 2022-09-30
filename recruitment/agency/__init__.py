@@ -12,6 +12,7 @@ from typing import Dict
 from typing import Optional
 from typing import Union
 
+from boto3.session import Session
 from botocore.exceptions import NoRegionError
 from actionpack import Action
 from actionpack.actions import Call
@@ -109,11 +110,14 @@ class Communicator:
     def __init__(self, config: Config):
         broker = Broker(config.service_name)
         for alias, method in broker.interface.items():
+            print('\nREGION_NAME -->>>', config.region_name)
             try:
                 client = boto3.client(
                     config.service_name,
                     endpoint_url=config.endpoint_url,
                     region_name=config.region_name,
+                    aws_access_key_id=config.aws_access_key_id,
+                    aws_secret_access_key=config.aws_secret_access_key,
                 )
             except (ValueError, NoRegionError) as e:
                 print('-->>>', e, e.__class__.__name__)
