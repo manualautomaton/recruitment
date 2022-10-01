@@ -110,7 +110,7 @@ class Communicator:
         for alias, method in broker.interface.items():
             print('\nREGION_NAME -->>>', config.region_name)
             try:
-                client = CoreSession().create_client(
+                client = CoreSession({'region': config.region_name}).create_client(
                     config.service_name,
                     endpoint_url=config.endpoint_url,
                     region_name=config.region_name,
