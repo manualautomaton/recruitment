@@ -113,7 +113,6 @@ class Communicator:
                 client = CoreSession({'region': config.region_name}).create_client(
                     config.service_name,
                     endpoint_url=config.endpoint_url,
-                    region_name=config.region_name,
                     aws_access_key_id=config.aws_access_key_id,
                     aws_secret_access_key=config.aws_secret_access_key,
                 )
