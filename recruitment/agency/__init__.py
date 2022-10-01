@@ -1,5 +1,3 @@
-import boto3
-
 from dataclasses import asdict
 from dataclasses import dataclass
 from enum import Enum
@@ -12,7 +10,7 @@ from typing import Dict
 from typing import Optional
 from typing import Union
 
-from boto3.session import Session
+from botocore.session import Session as CoreSession
 from botocore.exceptions import NoRegionError
 from actionpack import Action
 from actionpack.actions import Call
@@ -112,7 +110,7 @@ class Communicator:
         for alias, method in broker.interface.items():
             print('\nREGION_NAME -->>>', config.region_name)
             try:
-                client = boto3.client(
+                client = CoreSession().create_client(
                     config.service_name,
                     endpoint_url=config.endpoint_url,
                     region_name=config.region_name,
