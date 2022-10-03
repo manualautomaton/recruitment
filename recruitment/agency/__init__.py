@@ -111,7 +111,7 @@ class Communicator:
             print('\nREGION_NAME -->>>', config.region_name)
             try:
                 client = get_CoreSession(
-                    {'region': ('region', 'AWS_REGION_NAME', config.region_name, None)}
+                    {'region': ('region', 'AWS_REGION_NAME', 'us-east-1', None)}
                 ).create_client(
                     service_name=config.service_name,
                     region_name=config.region_name,
