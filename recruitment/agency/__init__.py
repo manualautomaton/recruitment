@@ -111,7 +111,7 @@ class Communicator:
             print('\nREGION_NAME -->>>', config.region_name)
             try:
                 client = CoreSession(
-                    {'region': ('region', 'AWS_REGION_NAME', config.region_name, None)}
+                    {'region': ('region', 'AWS_DEFAULT_REGION', config.region_name, None)}
                 ).create_client(
                     config.service_name,
                     endpoint_url=config.endpoint_url,
