@@ -110,7 +110,9 @@ class Communicator:
         for alias, method in broker.interface.items():
             print('\nREGION_NAME -->>>', config.region_name)
             try:
-                client = CoreSession().create_client(
+                client = CoreSession(
+                    {'region': ('region', 'AWS_DEFAULT_REGION', config.region_name, None)}
+                ).create_client(
                     config.service_name,
                     region_name=config.region_name,
                     endpoint_url=config.endpoint_url,
