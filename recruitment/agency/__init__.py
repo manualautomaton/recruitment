@@ -113,7 +113,7 @@ class Communicator:
                 client = get_CoreSession(
                     {'region': ('region', 'AWS_REGION_NAME', config.region_name, None)}
                 ).create_client(
-                    service_name=config.service_name,
+                    config.service_name,
                     region_name=config.region_name,
                     endpoint_url=config.endpoint_url,
                     aws_access_key_id=config.aws_access_key_id,
