@@ -10,7 +10,7 @@ from typing import Dict
 from typing import Optional
 from typing import Union
 
-from botocore.session import Session as CoreSession
+from botocore.session import get_session as get_CoreSession
 from botocore.exceptions import NoRegionError
 from actionpack import Action
 from actionpack.actions import Call
@@ -110,8 +110,8 @@ class Communicator:
         for alias, method in broker.interface.items():
             print('\nREGION_NAME -->>>', config.region_name)
             try:
-                client = CoreSession(
-                    {'region': ('region', 'AWS_DEFAULT_REGION', config.region_name, None)}
+                client = get_CoreSession(
+                    {'region': ('region', 'AWS_REGION_NAME', config.region_name, None)}
                 ).create_client(
                     config.service_name,
                     region_name=config.region_name,
